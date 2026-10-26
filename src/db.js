@@ -60,12 +60,14 @@ const MIGRATIONS = [
 ];
 
 function migrate(db) {
-  const current = db.pragma('user_version', { simple: true });
-  for (let version = current; version < MIGRATIONS.length; version++) {
+  for (let version = 0; version < MIGRATIONS.length; version++) {
+    // IMMEDIATE toma el bloqueo de escritura antes de leer la versión: si dos procesos
+    // arrancan a la vez, el segundo espera y no aplica la misma migración dos veces.
     db.transaction(() => {
+      if (db.pragma('user_version', { simple: true }) > version) return;
       db.exec(MIGRATIONS[version]);
       db.pragma(`user_version = ${version + 1}`);
-    })();
+    }).immediate();
   }
 }
 
