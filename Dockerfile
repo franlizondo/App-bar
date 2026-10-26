@@ -1,4 +1,4 @@
-# Imagen de producción. better-sqlite3 trae binarios precompilados para Node 22 (no requiere compilador).
+# Imagen de producción. Sin dependencias nativas: SQLite viene incluido en Node.js.
 FROM node:22-bookworm-slim
 
 ENV NODE_ENV=production \
@@ -18,4 +18,4 @@ USER node
 EXPOSE 3000
 
 HEALTHCHECK --interval=30s --timeout=3s CMD node -e "fetch('http://127.0.0.1:3000/salud').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
-CMD ["node", "src/server.js"]
+CMD ["node", "--disable-warning=ExperimentalWarning", "src/server.js"]

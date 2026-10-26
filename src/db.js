@@ -1,9 +1,9 @@
 'use strict';
-// Conexión a SQLite y migraciones versionadas (PRAGMA user_version).
+// Conexión a SQLite (incluido en Node.js: no hay nada que compilar) y migraciones versionadas (PRAGMA user_version).
 // Para agregar cambios al esquema en el futuro, sume un elemento al final de MIGRATIONS: nunca edite los anteriores.
 const fs = require('node:fs');
 const path = require('node:path');
-const Database = require('better-sqlite3');
+const { DatabaseSync } = require('node:sqlite');
 
 const MIGRATIONS = [
   // 1: esquema inicial
@@ -64,24 +64,43 @@ function migrate(db) {
     // IMMEDIATE toma el bloqueo de escritura antes de leer la versión: si dos procesos
     // arrancan a la vez, el segundo espera y no aplica la misma migración dos veces.
     db.transaction(() => {
-      if (db.pragma('user_version', { simple: true }) > version) return;
+      if (db.prepare('PRAGMA user_version').get().user_version > version) return;
       db.exec(MIGRATIONS[version]);
-      db.pragma(`user_version = ${version + 1}`);
-    }).immediate();
+      db.exec(`PRAGMA user_version = ${version + 1}`);
+    })();
   }
+}
+
+/**
+ * Envuelve `fn` en una transacción: si algo falla, no se guarda nada.
+ * BEGIN IMMEDIATE toma el bloqueo de escritura de entrada (evita choques entre procesos).
+ */
+function transaction(db, fn) {
+  return (...args) => {
+    db.exec('BEGIN IMMEDIATE');
+    try {
+      const result = fn(...args);
+      db.exec('COMMIT');
+      return result;
+    } catch (err) {
+      db.exec('ROLLBACK');
+      throw err;
+    }
+  };
 }
 
 function openDatabase(dataDir) {
   let db;
   if (dataDir === ':memory:') {
-    db = new Database(':memory:');
+    db = new DatabaseSync(':memory:');
   } else {
     fs.mkdirSync(dataDir, { recursive: true });
-    db = new Database(path.join(dataDir, 'bar.db'));
-    db.pragma('journal_mode = WAL'); // lecturas concurrentes mientras se escribe
+    db = new DatabaseSync(path.join(dataDir, 'bar.db'));
+    db.exec('PRAGMA journal_mode = WAL'); // lecturas concurrentes mientras se escribe
   }
-  db.pragma('foreign_keys = ON');
-  db.pragma('busy_timeout = 5000');
+  db.exec('PRAGMA foreign_keys = ON');
+  db.exec('PRAGMA busy_timeout = 5000');
+  db.transaction = (fn) => transaction(db, fn);
   migrate(db);
   return db;
 }

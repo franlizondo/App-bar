@@ -27,8 +27,8 @@ Los QR impresos contienen esa dirección; cambiarla después obliga a reimprimir
 
 | Pieza | Elección | Por qué |
 |---|---|---|
-| Servidor | **Node.js 22 + Express 5** | Ecosistema enorme, fácil de contratar quien lo mantenga, un solo lenguaje (JavaScript) en servidor y navegador. |
-| Base de datos | **SQLite** (`better-sqlite3`) | Un único archivo, cero administración, rapidísima para este volumen (decenas de mesas, cientos de llamados por noche). Backup = copiar un archivo. Se migra a PostgreSQL si algún día hay multi-sucursal. |
+| Servidor | **Node.js 22.13+ (recomendado 24 LTS) + Express 5** | Ecosistema enorme, fácil de contratar quien lo mantenga, un solo lenguaje (JavaScript) en servidor y navegador. |
+| Base de datos | **SQLite** (`node:sqlite`, incluido en Node.js) | Un único archivo, cero administración, nada que compilar ni instalar aparte, rapidísima para este volumen (decenas de mesas, cientos de llamados por noche). Backup = copiar un archivo. Se migra a PostgreSQL si algún día hay multi-sucursal. |
 | Páginas | **HTML generado en el servidor** + CSS y JS "a mano" (sin React ni compilación) | El menú pesa **~7 KB** comprimido y se ve aunque el JavaScript falle. Ideal para celulares de gama baja y 4G débil. Sin paso de build = menos cosas que se rompen. |
 | Tiempo real | **Server-Sent Events (SSE)** | La comunicación es en un solo sentido (servidor → panel de mozos). SSE es HTTP común: reconexión automática incluida, atraviesa proxys, sin librerías. WebSockets sería más complejo sin beneficio aquí. Latencia medida: **~60-80 ms**. |
 | QR | `qrcode` | Genera PNG y la hoja A4 lista para imprimir desde el propio panel. |
@@ -38,7 +38,7 @@ Los QR impresos contienen esa dirección; cambiarla después obliga a reimprimir
 | HTTPS / proxy | **Caddy** | Certificado HTTPS gratis y automático (Let's Encrypt), una config de 6 líneas. |
 | Infraestructura | VPS de 1 vCPU / 1 GB (≈ USD 5-6/mes) + dominio (≈ USD 10-15/año) | Sobra capacidad. Ver alternativas en el README. |
 
-Total de dependencias de producción: **5**.
+Total de dependencias de producción: **4**, todas en JavaScript puro (se instalan igual en Windows, Mac y Linux).
 
 ---
 

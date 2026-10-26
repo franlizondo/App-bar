@@ -207,7 +207,7 @@ function adminRoutes({ repos, config, sessions, uploadsDir, menuUrl, formatPrice
   /* ---------- Mesas y QR ---------- */
 
   const tableError = (err) =>
-    err && err.code === 'SQLITE_CONSTRAINT_UNIQUE' ? 'Ya existe una mesa con ese nombre.' : 'No se pudo guardar.';
+    err && /UNIQUE constraint/.test(err.message) ? 'Ya existe una mesa con ese nombre.' : 'No se pudo guardar.';
 
   router.get('/admin/mesas', (req, res) => {
     res.send(views.tablesPage({ tables: repos.tables.all(), menuUrl: menuUrl(req), msg: req.query.msg }));

@@ -5,9 +5,9 @@ set -e
 DESTINO="${DESTINO:-$HOME/backups-bar}"
 FECHA="$(date +%Y-%m-%d)"
 mkdir -p "$DESTINO"
-# ".backup" de SQLite hace una copia consistente aunque la app esté funcionando.
+# "VACUUM INTO" de SQLite hace una copia consistente aunque la app esté funcionando.
 docker compose -f "$(dirname "$0")/docker-compose.yml" exec -T app \
-  node -e "const D=require('better-sqlite3');new D('/data/bar.db',{readonly:true}).backup('/data/backup.db').then(()=>console.log('ok'))"
+  node --disable-warning=ExperimentalWarning -e "require('fs').rmSync('/data/backup.db',{force:true});new (require('node:sqlite').DatabaseSync)('/data/bar.db').exec(\"VACUUM INTO '/data/backup.db'\")"
 docker compose -f "$(dirname "$0")/docker-compose.yml" exec -T app tar -C /data -czf - backup.db uploads > "$DESTINO/bar-$FECHA.tar.gz"
 # Conserva los últimos 30 días.
 find "$DESTINO" -name 'bar-*.tar.gz' -mtime +30 -delete

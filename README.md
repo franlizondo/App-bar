@@ -18,7 +18,9 @@ Diseñado para personas mayores: letra grande, alto contraste, botones enormes, 
 
 ## 1. Probarlo en su computadora (5 minutos)
 
-Requisito: [Node.js 22](https://nodejs.org) (o 20.12+).
+Requisito: [Node.js](https://nodejs.org) versión LTS (22.13 o más nueva).
+
+**En Windows, lo más fácil:** descomprima el ZIP y haga doble clic en `iniciar-windows.bat`. Instala lo necesario la primera vez, carga datos de ejemplo y abre el navegador.
 
 ```bash
 npm install

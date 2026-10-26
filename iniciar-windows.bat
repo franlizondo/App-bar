@@ -35,6 +35,7 @@ if not exist node_modules\.instalado (
   if errorlevel 1 (
     echo.
     echo  ERROR: no se pudo instalar. Revise la conexion a internet y vuelva a intentar.
+    echo  Si el error sigue, saque una foto de esta ventana y enviela.
     goto :error
   )
   echo ok> node_modules\.instalado
