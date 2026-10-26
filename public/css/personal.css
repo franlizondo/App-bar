@@ -1,0 +1,92 @@
+/* Panel del personal: legible a 1-2 metros, en tablet o celular. */
+:root {
+  --texto: #111;
+  --fondo: #f2f2f2;
+  --mozo: #0b3d91;
+  --cuenta: #14532d;
+  --alerta: #b00020;
+  --foco: #ffbf00;
+  font-size: 112.5%;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.4;
+}
+:focus-visible { outline: 4px solid var(--foco); outline-offset: 2px; }
+[hidden] { display: none !important; }
+
+.inicio {
+  position: fixed; inset: 0; z-index: 10;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 1.5rem; text-align: center;
+  background: #fff;
+}
+.inicio h1 { font-size: 2rem; margin: 0 0 0.5rem; }
+.inicio__boton {
+  min-height: 5rem; padding: 1rem 2rem; margin: 1.5rem 0 1rem;
+  font: inherit; font-size: 1.5rem; font-weight: 800;
+  color: #fff; background: var(--mozo); border: 0; border-radius: 16px; cursor: pointer;
+}
+.inicio__nota { max-width: 28rem; }
+
+.barra {
+  position: sticky; top: 0; z-index: 2;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
+  background: #111; color: #fff;
+}
+.barra__titulo { margin: 0; font-size: 1.5rem; flex: 1 1 auto; }
+.barra__conexion { margin: 0; font-weight: 700; padding: 0.25rem 0.75rem; border-radius: 999px; }
+.barra__conexion.es-ok { background: #e6f4ea; color: #0d3d1f; }
+.barra__conexion.es-error { background: #ffdad6; color: #8a0b00; }
+.barra form { margin: 0; }
+.barra__boton {
+  min-height: 48px; padding: 0 1rem;
+  font: inherit; font-weight: 700;
+  color: #fff; background: transparent; border: 2px solid #fff; border-radius: 10px; cursor: pointer;
+}
+
+main { padding: 1rem; max-width: 60rem; margin: 0 auto; }
+.sin-llamados { font-size: 1.5rem; text-align: center; color: #333; margin-top: 3rem; }
+
+.llamados {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+}
+.llamado {
+  display: flex; flex-direction: column; justify-content: space-between; gap: 1rem;
+  padding: 1rem;
+  background: #fff;
+  border: 4px solid var(--mozo);
+  border-left-width: 16px;
+  border-radius: 14px;
+}
+.llamado--cuenta { border-color: var(--cuenta); }
+.llamado__mesa { margin: 0; font-size: 2.5rem; font-weight: 900; line-height: 1.1; }
+.llamado__tipo { margin: 0.25rem 0; font-size: 1.35rem; font-weight: 800; }
+.llamado--mozo .llamado__tipo { color: var(--mozo); }
+.llamado--cuenta .llamado__tipo { color: var(--cuenta); }
+.llamado__hora { margin: 0; font-size: 1.1rem; }
+
+.llamado--demorado { border-color: var(--alerta); }
+.llamado--demorado .llamado__hora { color: var(--alerta); font-weight: 800; }
+
+.llamado__atendido {
+  min-height: 4rem;
+  font: inherit; font-size: 1.35rem; font-weight: 800;
+  color: #fff; background: #111; border: 0; border-radius: 12px; cursor: pointer;
+  touch-action: manipulation;
+}
+.llamado__atendido:active { background: #333; }
+
+/* Alerta visual: el llamado nuevo parpadea unos segundos. */
+.llamado--nuevo { background: #fff3b0; }
+@media (prefers-reduced-motion: no-preference) {
+  .llamado--nuevo { animation: parpadeo 1s steps(2, start) 10; }
+  @keyframes parpadeo { to { background: #fff; } }
+}

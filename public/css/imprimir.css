@@ -1,0 +1,24 @@
+/* Hoja de QR para imprimir: 4 tarjetas por A4 (2 x 2). */
+@page { size: A4; margin: 10mm; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; color: #000; background: #fff; }
+.controles { padding: 1rem; font-size: 18px; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+.controles button { font: inherit; font-weight: 700; min-height: 48px; padding: 0 1.5rem; background: #0b3d91; color: #fff; border: 0; border-radius: 10px; cursor: pointer; }
+.hojas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; }
+.qr-tarjeta {
+  height: 138mm;
+  padding: 6mm;
+  border: 1px dashed #777;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center;
+  break-inside: avoid; page-break-inside: avoid;
+}
+.qr-tarjeta__bar { margin: 0; font-size: 14pt; }
+.qr-tarjeta__mesa { margin: 1mm 0 2mm; font-size: 30pt; font-weight: 900; letter-spacing: 1px; }
+.qr-tarjeta__img { width: 62mm; height: 62mm; image-rendering: pixelated; }
+.qr-tarjeta__titulo { margin: 3mm 0 1mm; font-size: 15pt; font-weight: 900; }
+.qr-tarjeta__pasos { margin: 0; padding-left: 7mm; text-align: left; font-size: 12.5pt; line-height: 1.35; }
+@media print {
+  .no-imprimir { display: none; }
+  .qr-tarjeta:nth-child(4n) { break-after: page; page-break-after: always; }
+}

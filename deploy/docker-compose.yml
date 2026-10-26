@@ -1,0 +1,31 @@
+# Despliegue en un servidor propio (VPS): la app + Caddy, que obtiene y renueva el certificado HTTPS solo.
+# Uso (desde la carpeta deploy/):  docker compose up -d --build
+services:
+  app:
+    build: ..
+    restart: unless-stopped
+    env_file: ../.env
+    environment:
+      NODE_ENV: production
+      DATA_DIR: /data
+      TRUST_PROXY: "1"
+    volumes:
+      - bar-data:/data
+
+  caddy:
+    image: caddy:2.8
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMINIO: ${DOMINIO:?Defina DOMINIO en deploy/.env, por ejemplo menu.mibar.com}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    depends_on:
+      - app
+
+volumes:
+  bar-data:
+  caddy-data:

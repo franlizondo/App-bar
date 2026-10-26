@@ -1,0 +1,7 @@
+{$DOMINIO} {
+	encode gzip zstd
+	reverse_proxy app:3000 {
+		# Las conexiones del panel de mozos (tiempo real) deben enviarse sin demora.
+		flush_interval -1
+	}
+}
