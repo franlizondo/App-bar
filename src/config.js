@@ -37,7 +37,9 @@ const config = {
   callCooldownSeconds: Number(env.CALL_COOLDOWN_SECONDS) || 60,
   maxPhotoBytes: 3 * 1024 * 1024,
   // Detrás de un proxy (Caddy, nginx, Render…) hay que confiar en él para conocer la IP real del cliente.
-  trustProxy: env.TRUST_PROXY !== undefined ? parseTrustProxy(env.TRUST_PROXY) : isProduction ? 1 : false,
+  // En desarrollo se confía solo en proxys de la misma PC (por ejemplo un túnel de Cloudflare),
+  // así los QR salen con https y la dirección pública del túnel.
+  trustProxy: env.TRUST_PROXY !== undefined ? parseTrustProxy(env.TRUST_PROXY) : isProduction ? 1 : 'loopback',
 };
 
 function parseTrustProxy(value) {
