@@ -9,16 +9,18 @@ letra grande, colores bien contrastados, botones enormes y nada de ventanas que 
 
 <table>
   <tr>
-    <td align="center"><img src="docs/img/1-menu.png" width="230" alt="Menú de la mesa 5 con las secciones y los botones Llamar al mozo y Pedir la cuenta"><br><sub>1. El cliente escanea el QR</sub></td>
-    <td align="center"><img src="docs/img/2-productos.png" width="230" alt="Lista de comidas con nombre, descripción y precio"><br><sub>2. Elige una sección y ve los precios</sub></td>
-    <td align="center"><img src="docs/img/3-mozo-avisado.png" width="230" alt="Confirmación: El mozo ya fue avisado"><br><sub>3. Toca un botón y queda confirmado</sub></td>
+    <td align="center"><img src="docs/img/guia/cliente-01-menu.png" width="230" alt="Menú de la mesa 5 con las secciones y los botones Llamar al mozo y Pedir la cuenta"><br><sub>1. El cliente escanea el QR</sub></td>
+    <td align="center"><img src="docs/img/guia/cliente-02-seccion.png" width="230" alt="Lista de comidas con foto, descripción y precio"><br><sub>2. Elige una sección y ve los precios</sub></td>
+    <td align="center"><img src="docs/img/guia/cliente-05-mozo-avisado.png" width="230" alt="Confirmación: El mozo ya fue avisado"><br><sub>3. Toca un botón y queda confirmado</sub></td>
   </tr>
 </table>
 
 <p align="center">
-  <img src="docs/img/4-panel-mozos.png" width="620" alt="Panel de los mozos con dos llamados: Mesa 5 llama al mozo y Mesa 2 pide la cuenta"><br>
+  <img src="docs/img/guia/mozos-05-varios-llamados.png" width="720" alt="Panel de los mozos con tres llamados: Mesa 7 demorada, Mesa 5 llama al mozo y Mesa 2 pide la cuenta"><br>
   <sub>4. En la barra, el mozo ve qué mesa lo llama y para qué, y lo marca como atendido</sub>
 </p>
+
+> 📸 **¿Querés ver todas las pantallas paso a paso?** Mirá la **[guía con capturas: cómo funciona la aplicación](docs/COMO-FUNCIONA.md)**.
 
 ---
 
@@ -57,6 +59,8 @@ letra grande, colores bien contrastados, botones enormes y nada de ventanas que 
 3. **En la barra suena una alerta** y aparece una tarjeta grande: *MESA 5 · LLAMA AL MOZO · 21:34*.
 4. **El mozo va a la mesa y toca "ATENDIDO".** La tarjeta desaparece de todos los paneles.
 
+Para ver cada paso con capturas, ver la [guía de cómo funciona](docs/COMO-FUNCIONA.md).
+
 El encargado del bar carga el menú, cambia precios, marca productos "sin stock" e imprime los QR desde el
 **panel de administración**, sin necesidad de saber nada técnico.
 
@@ -91,7 +95,7 @@ El encargado del bar carga el menú, cambia precios, marca productos "sin stock"
 
 ### 3. Administración (`/admin`)
 
-<img src="docs/img/5-admin-menu.png" width="230" align="right" alt="Pantalla de administración del menú con botones Sin stock y Editar">
+<img src="docs/img/guia/admin-03-productos.png" width="230" align="right" alt="Pantalla de administración del menú con botones Sin stock y Editar">
 
 Se entra con una **contraseña**. Desde acá se maneja todo, también desde el celular:
 
@@ -106,7 +110,7 @@ Se entra con una **contraseña**. Desde acá se maneja todo, también desde el c
 
 <br clear="right">
 
-<p align="center"><img src="docs/img/6-qr-imprimir.png" width="560" alt="Hoja para imprimir con los QR de la Mesa 1 y la Mesa 2"><br><sub>Hoja de QR lista para imprimir</sub></p>
+<p align="center"><img src="docs/img/guia/admin-07-hoja-qr.png" width="420" alt="Hoja para imprimir con los QR de las mesas 1 a 4"><br><sub>Hoja de QR lista para imprimir</sub></p>
 
 ---
 
@@ -278,5 +282,6 @@ npm run dev  # servidor de desarrollo con recarga automática
 
 ### Documentación
 
+- **[docs/COMO-FUNCIONA.md](docs/COMO-FUNCIONA.md)**: guía con capturas de todas las pantallas, reglas de funcionamiento y qué pasa cuando algo falla.
 - **[docs/INSTALACION.md](docs/INSTALACION.md)**: configuración, prueba por internet, publicación en un servidor, copias de seguridad y solución de problemas.
 - **[docs/PROPUESTA.md](docs/PROPUESTA.md)**: decisiones técnicas, arquitectura, modelo de datos, plan por fases y riesgos.
