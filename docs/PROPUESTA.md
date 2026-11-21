@@ -1,7 +1,7 @@
 # Propuesta técnica — Menú QR con llamado al mozo
 
 Este documento cubre: decisiones, stack, arquitectura, modelo de datos, plan por fases y riesgos.
-La instalación y el uso diario están en el [README](../README.md).
+El uso diario está en el [README](../README.md) y la instalación en [INSTALACION.md](INSTALACION.md).
 
 ---
 
@@ -36,7 +36,7 @@ Los QR impresos contienen esa dirección; cambiarla después obliga a reimprimir
 | Seguridad | Código propio, sin dependencias | Cookies firmadas (HMAC), limitador de pedidos, CSP estricta, protección CSRF. Poco código, fácil de auditar. |
 | Conexión inestable | **Service worker** | Guarda una copia del menú: abre aunque la señal sea mala. Los llamados reintentan solos. |
 | HTTPS / proxy | **Caddy** | Certificado HTTPS gratis y automático (Let's Encrypt), una config de 6 líneas. |
-| Infraestructura | VPS de 1 vCPU / 1 GB (≈ USD 5-6/mes) + dominio (≈ USD 10-15/año) | Sobra capacidad. Ver alternativas en el README. |
+| Infraestructura | VPS de 1 vCPU / 1 GB (≈ USD 5-6/mes) + dominio (≈ USD 10-15/año) | Sobra capacidad. Ver alternativas, incluida una gratuita, en [INSTALACION.md](INSTALACION.md#5-publicar-en-un-servidor). |
 
 Total de dependencias de producción: **4**, todas en JavaScript puro (se instalan igual en Windows, Mac y Linux).
 
